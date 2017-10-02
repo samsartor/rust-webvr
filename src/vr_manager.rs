@@ -9,7 +9,6 @@ use VRServiceCreator;
 #[cfg(feature = "googlevr")]
 use api::GoogleVRServiceCreator;
 
-#[cfg(target_os = "windows")]
 #[cfg(feature = "openvr")]
 use api::OpenVRServiceCreator;
 
@@ -49,7 +48,6 @@ impl VRServiceManager {
     // Register default VR services specified in crate's features
     pub fn register_defaults(&mut self) {
         let creators: Vec<Box<VRServiceCreator>> = vec!(
-            #[cfg(target_os = "windows")]
             #[cfg(feature = "openvr")]
             OpenVRServiceCreator::new(),
             #[cfg(target_os = "android")]

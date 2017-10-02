@@ -22,6 +22,9 @@ pub struct OpenVRLibrary {
 
 impl OpenVRLibrary {
     pub unsafe fn new()-> lib::Result<OpenVRLibrary> {
+        #[cfg(unix)]
+        let lib = try!(lib::Library::new("libopenvr_api.so"));
+        #[cfg(windows)]
         let lib = try!(lib::Library::new("openvr_api.dll"));
         let init_internal = try!(lib.get::<VRInitInternal>(b"VR_InitInternal\0")).into_raw();
         let shutdown_internal = try!(lib.get::<VRShutdownInternal>(b"VR_ShutdownInternal\0")).into_raw();
